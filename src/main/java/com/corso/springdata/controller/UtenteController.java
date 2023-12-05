@@ -17,43 +17,38 @@ import com.corso.springdata.service.UtenteService;
 public class UtenteController {
 
 	private UtenteService utenteservice;
-	
-	public Utente utenteLoggato = null;
 
-	
+	public Utente utenteLoggato = null;
 
 	public UtenteController(UtenteService utenteservice) {
 		super();
 		this.utenteservice = utenteservice;
 	}
-	
-	
+
 	@GetMapping("/utenti")
 	public String listaUtenti(Model model) {
-		model.addAttribute("utenti",utenteservice.getTuttiUtenti());
+		model.addAttribute("utenti", utenteservice.getTuttiUtenti());
 		return "utenti";
 	}
-	 
-	
+
 	@GetMapping("/utenti/nuovo")
 	public String CreaUtente(Model model) {
-		//Creiamo un nuovo utente
+		// Creiamo un nuovo utente
 		Utente utente = new Utente();
-		model.addAttribute("utente",utente);
+		model.addAttribute("utente", utente);
 		return "crea_utente";
 	}
-	
-	
+
 	@PostMapping("/utenti")
-	public String CreaUtente(@ModelAttribute("utente")Utente utente, @RequestParam(name = "isAdmin") String isAdmin) {
+	public String CreaUtente(@ModelAttribute("utente") Utente utente, @RequestParam(name = "isAdmin") String isAdmin) {
 		utente.setAdmin((isAdmin.equalsIgnoreCase("true")) ? true : false);
 		utenteservice.salvaUtente(utente);
-		return"redirect:/utenti";
-		
+		return "redirect:/utenti";
+
 	}
-	
+
 	//////////////////////////////////////////////////////////
-	
+
 //	@GetMapping("/login")
 //	public String loginUtente(Model model) {
 //		Utente utente = new Utente();
@@ -81,37 +76,41 @@ public class UtenteController {
 //			return "redirect:/login";
 //		}
 //	}
-	
+
 	@GetMapping("/login")
 	public String loginUtente(Model model) {
 
 		Utente utente = new Utente();
-		model.addAttribute("utente",utente);
+		model.addAttribute("utente", utente);
 		return "login";
 	}
-	 
-	
+
+	@GetMapping("/")
+	public String home() {
+		return "redirect:/login";
+	}
+
 	@PostMapping("/login")
-	public String loginutente(@ModelAttribute("utente")Utente utente) {
-		
+	public String loginutente(@ModelAttribute("utente") Utente utente) {
+
 		Optional<Utente> utentelog = utenteservice.loginUtente(utente.getUsername(), utente.getPassword());
-		
-		if(!utentelog.isEmpty()) {
+
+		if (!utentelog.isEmpty()) {
 			this.utenteLoggato = utentelog.get();
-			if(utentelog.get().isAdmin()) {
+			if (utentelog.get().isAdmin()) {
 				return "redirect:/utenti";
-			}else {
+			} else {
 				return "redirect:/libri";
 			}
 		}
 		return "redirect:/login";
 	}
-	
+
 	@GetMapping("/cancellaUtente/{id}")
 	public String cancellaUtente(@PathVariable Integer id) {
 		utenteservice.cancellaUtenteById(id);
 		return "redirect:/utenti";
-		
-	}	
-	
+
+	}
+
 }
