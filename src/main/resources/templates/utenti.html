@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Gestione Utenti</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+	<div class="container">
+		<div class="row">
+			<h1>Lista Utenti</h1>
+
+			<div class="row">
+				<div class="col-lg-3 justify-content-between w-100">
+					<a th:href="@{/utenti/nuovo}" class="btn btn-primary btn-sm mb-3">Aggiungi Utente</a>
+					<a th:href="@{/libriAdmin}" class="btn btn-primary btn-sm mb-3">Lista libri</a>
+					<a th:href="@{/libri/nuovo}" class="btn btn-primary btn-sm mb-3">Aggiungi libri</a>
+				</div>
+			</div>
+
+			<table class="table table-dark table-striped">
+				<thead>
+					<tr>
+						<th scope="col">Username</th>
+						<th scope="col">Password</th>
+						<th scope="col">Admin</th>
+						<th scope="col">Tipo</th>
+						<th scope="col">Azioni</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="utente: ${utenti}">
+						<td th:text="${utente.username}"></td>
+						<td th:text="${utente.password}"></td>
+						<td th:text="${utente.admin}"></td>
+						<td>
+							<span th:if="${utente.admin}">Admin</span>
+							<span th:if="${not utente.admin}">Utente normale</span>
+						</td>
+						<td>
+							<a th:href="@{/cancellaUtente/{id}(id=${utente.id})}"
+								class="btn btn-danger">Cancella</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+</body>
+
+</html>

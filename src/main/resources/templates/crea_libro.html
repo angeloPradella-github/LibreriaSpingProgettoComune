@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Crea Libro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
+</head>
+
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+            <h1 class="text-center">Crea Libro</h1>
+            <div class="card-body">
+                <form th:action="@{/libri}" th:object="${libro}" method="POST">
+                    <div class="form-group mt-2">
+                        <label> Titolo </label> <input type="text"
+                                                         name="titolo" th:field="*{titolo}" class="form-control"
+                                                         placeholder="Inserisci titolo del libro" />
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <label> Autore </label> <input type="text"
+                                                         name="autore" th:field="*{autore}" class="form-control"
+                                                         placeholder="Inserisci autore del libro" />
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <label> Casa Editrice </label> <input type="text"
+                                                                name="casa_editrice" th:field="*{casa_editrice}" class="form-control"
+                                                                placeholder="Inserisci casa editrice del libro" />
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <label> Pagine </label> <input type="number"
+                                                         name="pagine" th:field="*{pagine}" class="form-control"
+                                                         placeholder="Inserisci numero pagine del libro" />
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-5 w-100">
+                    Invia</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

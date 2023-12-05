@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Carrello Utente</title>
+    <!-- Aggiungi i link di Bootstrap -->
+    <link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="mb-4">Carrello Utente</h2>
+
+    <!-- Mostra il nome dell'utente -->
+    <p class="lead" th:text="'Benvenuto, ' + ${utenteLoggato.username}"></p>
+
+    <!-- Mostra la dimensione del carrello -->
+   <!-- <p class="text-muted" th:text="'Il tuo carrello contiene ' + ${dimensioneCarrelloUtente} + ' libri'"></p> -->
+
+    <!-- Tabella Bootstrap -->
+    <table class="table table-bordered">
+        <thead class="table-primary">
+        <tr>
+            <th scope="col">Utente</th>
+            <th scope="col">Libri</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Itera attraverso le chiavi della HashMap -->
+        <tr th:each="entry : ${carrello.entrySet()}">
+            <!-- Accedi all'utente -->
+            <td th:text="${entry.key}"></td>
+
+            <!-- Itera attraverso la lista di libri associata a ciascuna chiave -->
+            <td>
+                <ul class="list-unstyled">
+                    <!-- Itera attraverso i libri -->
+                    <li th:each="libro : ${entry.value}">
+                        <!-- Mostra i dettagli del libro -->
+                        <span th:text="${libro.titolo + ' - ' + libro.autore}"></span>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Torna alla pagina principale -->
+    <a th:href="@{/libri}" class="btn btn-secondary">Torna alla pagina principale</a>
+</div>
+
+</body>
+</html>
